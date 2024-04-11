@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Compressione extends Application {
-	
+	char matrice [][]= new char [3][3];	
 	TextField tCompresso = new TextField();
 	TextField tNonCompresso = new TextField();
 	TextField tPercentuale = new TextField();
@@ -21,7 +21,7 @@ public class Compressione extends Application {
 	GridPane griglia = new GridPane();
 	Hashtable<Integer,Integer> my_dict = new Hashtable<Integer,Integer>();
 	public void start(Stage primaryStage) {
-		
+	
 		
 		
 		griglia.setPadding(new Insets(5, 5, 5, 5));
@@ -35,6 +35,17 @@ public class Compressione extends Application {
 		my_dict.put(5,3);
 		my_dict.put(6,3);
 		my_dict.put(7,3);
+		
+		matrice[0][0]='v';
+		matrice[0][0]='b';
+		matrice[0][0]='b';
+		matrice[0][0]='g';
+		matrice[0][0]='g';
+		matrice[0][0]='g';
+		matrice[0][0]='b';
+		matrice[0][0]='v';
+		matrice[0][0]='g';
+		
 
 		griglia.add(eCompresso, 0, 0);
 		griglia.add(eNonCompresso, 0, 1);
@@ -54,13 +65,32 @@ public class Compressione extends Application {
 
 	public void controlla() {
 		int v[]=new int [matrice.length];
-		for(int i=0; i<=matrice.length; i++) {
-			for(int c=0; c<=matrice.length; c++) {
-				if(matrice[]) {
-						
+		double numeroCompresso=matrice[0].length*matrice.length*24;
+		tCompresso.setText(numeroCompresso+"");
+		int contatore=1;
+		int compresso=0;
+		
+		for (int righe= 0;righe<matrice.length; righe++, contatore=1) {
+			for (int colonne=0; colonne<matrice.length;colonne++) {
+				if (matrice[colonne-1][righe]==matrice[colonne][righe]) {
+					contatore++;
+				}else {
+					v[righe]+=my_dict.get(contatore)+24;
 				}
 			}
+			v[righe]+=my_dict.get(contatore)+24;
 		}
+		for (int a=0;a<v.length;a++) {
+			compresso+=v[a];
+		}
+		tCompresso.setText(compresso+"");
+		
+		double perCompresso=compresso/numeroCompresso*100;
+		double meno100=100-perCompresso;
+		tPercentuale.setText(""+meno100);
+		
+		
+		
 	}
 	public static void main(String[] args) {
 		launch(args);
