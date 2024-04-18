@@ -1,5 +1,7 @@
 package it.edu.iisgubbio.tpsit.Compressione;
-import java.util.Hashtable;
+
+
+import java.util.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,90 +11,88 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Compressione extends Application {
-	char matrice [][]= new char [3][3];	
-	TextField tCompresso = new TextField();
-	TextField tNonCompresso = new TextField();
-	TextField tPercentuale = new TextField();
-	Label eCompresso = new Label("Compresso");
-	Label eNonCompresso = new Label("Non compresso");
-	Label ePercentuale = new Label("percentuale compress.");
-	Button calcola= new Button("calcola");
-	GridPane griglia = new GridPane();
+public class Compressione extends Application{
+
+
+	char g[][]=new char[3][3];
+	TextField cPercentuale=new TextField();
+
+	TextField nCompresso=new TextField();
+	Label eCompresso=new Label("Compresso");
+	Label eNonCompresso=new Label(" non Compresso");
+	Label ePercentuale=new Label("percentuale compressione");
 	Hashtable<Integer,Integer> my_dict = new Hashtable<Integer,Integer>();
-	public void start(Stage primaryStage) {
-	
-		
-		
-		griglia.setPadding(new Insets(5, 5, 5, 5));
-		griglia.setHgap(15); 
-		griglia.setVgap(15);
-		
-		my_dict.put(1,1);
-		my_dict.put(2,2);
-		my_dict.put(3,2);
-		my_dict.put(4,3);
-		my_dict.put(5,3);
-		my_dict.put(6,3);
-		my_dict.put(7,3);
-		
-		matrice[0][0]='v';
-		matrice[0][0]='b';
-		matrice[0][0]='b';
-		matrice[0][0]='g';
-		matrice[0][0]='g';
-		matrice[0][0]='g';
-		matrice[0][0]='b';
-		matrice[0][0]='v';
-		matrice[0][0]='g';
-		
+	Button bCalcola=new Button("Calcola");
+	TextField cCompresso=new TextField();
+	GridPane griglia=new GridPane();
 
-		griglia.add(eCompresso, 0, 0);
-		griglia.add(eNonCompresso, 0, 1);
+	public void start(Stage finestra) {
+		my_dict.put(1, 1);
+		my_dict.put(2, 2);
+		my_dict.put(3, 2);
+		my_dict.put(4, 3);
+		my_dict.put(5, 3);
+		my_dict.put(6, 3);
+		my_dict.put(7, 3);
+		my_dict.put(8, 4);
+
+		g[0][0]='v';
+		g[1][0]='b';
+		g[2][0]='b';
+		g[0][1]='g';
+		g[1][1]='g';
+		g[2][1]='g';
+		g[0][2]='b';
+		g[1][2]='v';
+		g[2][2]='g';
+
+		griglia.add(eNonCompresso, 0, 0);
+		griglia.add(eCompresso, 0, 1);
 		griglia.add(ePercentuale, 0, 2);
-		griglia.add(tCompresso, 1, 0);
-		griglia.add(tNonCompresso, 1, 1);
-		griglia.add(tPercentuale, 1, 2);
-		griglia.add(calcola, 0, 4);
-
-		calcola.setOnAction(e -> controlla());
+		griglia.add(bCalcola, 0, 3);
+		griglia.add(nCompresso, 1, 0);
+		griglia.add(cCompresso, 1, 1);
+		griglia.add(cPercentuale, 1, 2);
 		
-		Scene scena = new Scene(griglia, 400, 270);
-		primaryStage.setTitle("Compressione");
-		primaryStage.setScene(scena);
-		primaryStage.show();
+		griglia.setHgap(15);
+		griglia.setVgap(15);
+		griglia.setPadding(new Insets(10,10,10,10));
+		bCalcola.setOnAction(e-> Calcola());
+		Scene scena =new Scene(griglia);
+		finestra.setTitle("parola25");
+		finestra.setScene(scena);
+		finestra.show();
 	}
 
-	public void controlla() {
-		int v[]=new int [matrice.length];
-		double numeroCompresso=matrice[0].length*matrice.length*24;
-		tCompresso.setText(numeroCompresso+"");
-		int contatore=1;
+	public void Calcola() {
+		double nCompress=g[0].length*g.length*24;
+		nCompresso.setText(""+nCompress);
 		int compresso=0;
+		int contatore=1;
+		int v[]=new int[g.length];
 		
-		for (int righe= 0;righe<matrice.length; righe++, contatore=1) {
-			for (int colonne=0; colonne<matrice.length;colonne++) {
-				if (matrice[colonne-1][righe]==matrice[colonne][righe]) {
+		for(int rige=0;rige<g.length;rige++,contatore=1) {
+			for(int c=1;c<g.length;c++) {
+				if(g[c-1][rige]==g[c][rige]) {
 					contatore++;
-				}else {
-					v[righe]+=my_dict.get(contatore)+24;
+				}else{
+					v[rige]+=my_dict.get(contatore)+24;
 				}
 			}
-			v[righe]+=my_dict.get(contatore)+24;
+			v[rige]+=my_dict.get(contatore)+24;
 		}
-		for (int a=0;a<v.length;a++) {
-			compresso+=v[a];
+		for(int p=0;p<v.length;p++) {
+			compresso+=v[p];
 		}
-		tCompresso.setText(compresso+"");
+		cCompresso.setText(""+compresso);
 		
-		double perCompresso=compresso/numeroCompresso*100;
-		double meno100=100-perCompresso;
-		tPercentuale.setText(""+meno100);
-		
-		
-		
+		double perCompresso=compresso/nCompress*100;
+		double bho=100-perCompresso;
+		cPercentuale.setText(""+bho);
 	}
+	
 	public static void main(String[] args) {
+
 		launch(args);
 	}
 }
